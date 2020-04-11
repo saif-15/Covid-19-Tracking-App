@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.stechlabs.covid_19.R
 import com.stechlabs.covid_19.ui.adapters.CountryAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
@@ -29,7 +28,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getGlobalResults().observe(this, Observer {
             val adapter=CountryAdapter()
             recyclerView.adapter=adapter
-            adapter.setList(it?.body())
+            adapter.setList(it)
         })
         return root
     }

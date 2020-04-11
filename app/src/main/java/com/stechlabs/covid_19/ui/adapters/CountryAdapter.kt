@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stechlabs.covid_19.R
-import com.stechlabs.covid_19.models.apiResponse.Country
+import com.stechlabs.covid_19.models.persistence.Country
 import kotlinx.android.synthetic.main.item_adpater.view.*
 
 class CountryAdapter: RecyclerView.Adapter<CountryAdapter.MyViewHolder>() {

@@ -8,8 +8,8 @@ import retrofit2.Response
 
 class DashboardViewModel : ViewModel() {
 
-    fun getGlobalResults():LiveData<Response<Global>> = Repository.observeGlobal()
+    /*fun getGlobalResults():LiveData<Response<Global>> = Repository.observeGlobal()
     fun cancelJob(){
         Repository.cancelJobs()
-    }
+    }*/
 }

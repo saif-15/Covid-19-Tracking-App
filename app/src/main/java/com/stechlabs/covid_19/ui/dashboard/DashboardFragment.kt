@@ -25,16 +25,16 @@ class DashboardFragment : Fragment() {
         val cases:TextView= root.findViewById(R.id.total_cases)
         val recovered: TextView = root.findViewById(R.id.total_recovered)
         val deaths: TextView = root.findViewById(R.id.total_deaths)
-        dashboardViewModel.getGlobalResults().observe(this, Observer {
+        /*dashboardViewModel.getGlobalResults().observe(this, Observer {
             cases.text=it.body()?.cases.toString()
             recovered.text=it.body()?.recovered.toString()
             deaths.text=it.body()?.deaths.toString()
-        })
+        })*/
         return root
     }
 
     override fun onDestroy() {
-        dashboardViewModel.cancelJob()
+        /*dashboardViewModel.cancelJob()*/
         super.onDestroy()
     }
 }

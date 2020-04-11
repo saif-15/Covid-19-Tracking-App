@@ -13,5 +13,5 @@ interface GlobalDao {
     suspend fun caheGLobalData(global:Global)
 
     @Query("SELECT * FROM global LIMIT 1")
-    suspend fun getGlobalResults():LiveData<Global>
+    suspend fun getGlobalResults():Global
 }

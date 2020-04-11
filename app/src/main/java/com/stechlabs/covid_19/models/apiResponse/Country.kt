@@ -1,5 +1,6 @@
 package com.stechlabs.covid_19.models.apiResponse
 
+import androidx.room.Entity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

@@ -1,10 +1,10 @@
 package com.stechlabs.covid_19.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.stechlabs.covid_19.ApiService.MyRetofitBuilder
-import com.stechlabs.covid_19.models.apiResponse.Country
+import com.stechlabs.covid_19.models.apiResponse.Country as api
+import com.stechlabs.covid_19.models.persistence.Country
 import com.stechlabs.covid_19.models.apiResponse.Global
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -13,13 +13,13 @@ import retrofit2.Response
 
 object Repository {
 
-    private val mutableLiveData_global:MutableLiveData<Response<Global>> = MutableLiveData()
-    private val mutableLiveData_countries:MutableLiveData<Response<List<Country>>> = MutableLiveData()
+   /* private  var mutableLiveData_global:Response<Global> = */
+    private var mutableLiveData_countries:List<api> = ArrayList()
 
 
     var  job:CompletableJob?=null
 
-    private fun getGlobalResults(){
+/*    private fun getGlobalResults(){
         job= Job()
 
         job.let {
@@ -27,32 +27,32 @@ object Repository {
                 val temp=MyRetofitBuilder.ApiService.getGlobalResult()
                 job?.complete()
                 withContext(Main){
-                    mutableLiveData_global.postValue(temp)
+                    mutableLiveData_global=temp
                 }
             }
         }
-    }
+    }*/
 
-    fun observeGlobal():LiveData<Response<Global>>{
+    /*fun observeGlobal():Response<Global>{
         getGlobalResults()
         return mutableLiveData_global
-    }
+    }*/
 
     private fun getCountriesResults(){
         job= Job()
 
         job.let {
             CoroutineScope(IO).launch {
-                val temp=MyRetofitBuilder.ApiService.getAllResults()
+                val temp=MyRetofitBuilder.ApiService.getAllResults().body()!!
                 job?.complete()
                 withContext(Main){
-                    mutableLiveData_countries.postValue(temp)
+                    mutableLiveData_countries=temp
                 }
             }
         }
     }
 
-    fun observeCountries():LiveData<Response<List<Country>>>{
+    fun observeCountries():List<api>{
         getCountriesResults()
         return mutableLiveData_countries
     }
