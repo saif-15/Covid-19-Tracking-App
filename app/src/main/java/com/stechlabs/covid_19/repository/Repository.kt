@@ -9,12 +9,14 @@ import com.stechlabs.covid_19.persistence.database.MyDatabase
 import com.stechlabs.covid_19.utils.Converter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import com.stechlabs.covid_19.models.persistence.Country as dbResponse
 
 class Repository(application: Application) {
 
     private var countryDao: CountryDao
     private var listCountries1: MutableLiveData<List<dbResponse>> = MutableLiveData()
+    private var country: MutableLiveData<dbResponse> = MutableLiveData()
     private var job: CompletableJob? = null
 
     init {
@@ -48,7 +50,7 @@ class Repository(application: Application) {
                 } catch (ex: Exception) {
                     println(ex.message)
                 } finally {
-                    listCountries1.postValue(repository.countryDao.getAllResults())
+                    listCountries1.postValue(countryDao.getAllResults())
                     println("Debug:getting data from database")
                 }
             }
@@ -70,6 +72,24 @@ class Repository(application: Application) {
     fun observeCountriesFromDB(): LiveData<List<dbResponse>> {
         getCountriesResults()
         return listCountries1
+    }
+
+    fun observeGlobalResult(): LiveData<dbResponse> {
+        getGlobalResult()
+        return country
+    }
+
+    private fun getGlobalResult() {
+        job = Job()
+        job?.let {
+            CoroutineScope(IO + it).launch {
+                val temp = countryDao.getGlobalResult()
+                job?.complete()
+                withContext(Main) {
+                    country.value = temp
+                }
+            }
+        }
     }
 
     fun cancelJobs() {
