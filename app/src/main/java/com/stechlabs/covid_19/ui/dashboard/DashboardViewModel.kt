@@ -1,15 +1,15 @@
 package com.stechlabs.covid_19.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.stechlabs.covid_19.models.apiResponse.Global
-import com.stechlabs.covid_19.repository.Repository
-import retrofit2.Response
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
-    /*fun getGlobalResults():LiveData<Response<Global>> = Repository.observeGlobal()
+    /*private val repo=MainRepository(application)
+
+    fun getGlobalResult():LiveData<Country> = repo.loadGlobalData()
+
     fun cancelJob(){
-        Repository.cancelJobs()
+        repo.cancelJob()
     }*/
 }

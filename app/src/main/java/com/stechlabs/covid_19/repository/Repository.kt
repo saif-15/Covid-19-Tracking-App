@@ -1,63 +1,78 @@
 package com.stechlabs.covid_19.repository
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.stechlabs.covid_19.ApiService.MyRetofitBuilder
-import com.stechlabs.covid_19.models.apiResponse.Country as api
-import com.stechlabs.covid_19.models.persistence.Country
-import com.stechlabs.covid_19.models.apiResponse.Global
+import com.stechlabs.covid_19.ApiService.MyRetrofitBuilder
+import com.stechlabs.covid_19.persistence.Dao.CountryDao
+import com.stechlabs.covid_19.persistence.database.MyDatabase
+import com.stechlabs.covid_19.utils.Converter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import retrofit2.Response
+import com.stechlabs.covid_19.models.persistence.Country as dbResponse
 
-object Repository {
+class Repository(application: Application) {
 
-   /* private  var mutableLiveData_global:Response<Global> = */
-    private var mutableLiveData_countries:List<api> = ArrayList()
+    private var countryDao: CountryDao
+    private var listCountries1: MutableLiveData<List<dbResponse>> = MutableLiveData()
+    private var job: CompletableJob? = null
+
+    init {
+        val database = MyDatabase.getInstance(application.applicationContext)!!
+        countryDao = database._countryDao()
+    }
 
 
-    var  job:CompletableJob?=null
+    //Creating singleton object of the repository
+    companion object {
+        private lateinit var repository: Repository
+        fun getInstance(application: Application): Repository? {
+            if (!::repository.isInitialized)
+                repository = Repository(application)
+            println("repo object:${repository.hashCode()}")
+            return repository
 
-/*    private fun getGlobalResults(){
-        job= Job()
-
-        job.let {
-            CoroutineScope(IO).launch {
-                val temp=MyRetofitBuilder.ApiService.getGlobalResult()
-                job?.complete()
-                withContext(Main){
-                    mutableLiveData_global=temp
-                }
-            }
         }
-    }*/
+    }
 
-    /*fun observeGlobal():Response<Global>{
-        getGlobalResults()
-        return mutableLiveData_global
-    }*/
-
-    private fun getCountriesResults(){
-        job= Job()
-
+    private fun getCountriesResults() {
+        job = Job()
         job.let {
             CoroutineScope(IO).launch {
-                val temp=MyRetofitBuilder.ApiService.getAllResults().body()!!
-                job?.complete()
-                withContext(Main){
-                    mutableLiveData_countries=temp
+                try {
+                    val temp = MyRetrofitBuilder.ApiService.getAllResults().body()!!
+                    println("Debug Network request....")
+                    val data = async { Converter.getCountryList(temp) }
+                    cacheCountryData(data.await())
+                    job?.complete()
+                } catch (ex: Exception) {
+                    println(ex.message)
+                } finally {
+                    listCountries1.postValue(repository.countryDao.getAllResults())
+                    println("Debug:getting data from database")
                 }
             }
         }
     }
 
-    fun observeCountries():List<api>{
+
+    private fun cacheCountryData(list: List<dbResponse>) {
+        job = Job()
+        job?.let {
+            CoroutineScope(IO + it).launch {
+                countryDao.cacheCountryData(list = list)
+                println("Debug:caching data")
+                job?.complete()
+            }
+        }
+    }
+
+    fun observeCountriesFromDB(): LiveData<List<dbResponse>> {
         getCountriesResults()
-        return mutableLiveData_countries
+        return listCountries1
     }
 
-    fun cancelJobs(){
+    fun cancelJobs() {
         job?.cancel()
     }
 }

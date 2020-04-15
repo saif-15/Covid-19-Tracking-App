@@ -4,16 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.stechlabs.covid_19.models.persistence.Country
-import com.stechlabs.covid_19.repository.DbRepository
-import com.stechlabs.covid_19.repository.MainRepository
 import com.stechlabs.covid_19.repository.Repository
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var repository=MainRepository(application)
+    private var repository = Repository.getInstance(application)
 
-    fun getGlobalResults():LiveData<List<Country>> = repository.loadAllCountryData()
+
+    fun getCountriesResultFromDB(): LiveData<List<Country>> =
+        repository!!.observeCountriesFromDB()
+
     fun cancelJobs(){
-        Repository.cancelJobs()
+        repository!!.cancelJobs()
     }
 }
