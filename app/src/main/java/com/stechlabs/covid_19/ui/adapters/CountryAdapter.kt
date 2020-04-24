@@ -9,21 +9,27 @@ import com.stechlabs.covid_19.models.persistence.Country
 import kotlinx.android.synthetic.main.item_adpater.view.*
 
 
-class CountryAdapter(private val list: List<Country>) :
+class CountryAdapter :
     RecyclerView.Adapter<CountryAdapter.MyViewHolder>() {
 
+    private var list: List<Country> = listOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-    val view=LayoutInflater.from(parent.context).inflate(R.layout.item_adpater,parent,false)
-        return MyViewHolder(view)
+
+        return MyViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_adpater, parent, false)
+        )
     }
 
-    override fun getItemCount():Int{
-        return list.size
+    override fun getItemCount() = list.size
+
+    fun setList(list: List<Country>) {
+        this.list = list
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = list[position]
-        holder.bind(item)
+        holder.bind(list[position])
     }
 
     inner class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){

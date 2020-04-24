@@ -18,6 +18,7 @@ class Repository(application: Application) {
     private var listCountries1: MutableLiveData<List<dbResponse>> = MutableLiveData()
     private var country: MutableLiveData<dbResponse> = MutableLiveData()
     private var job: CompletableJob? = null
+    private val TIME_OUT = 4000L
 
     init {
         val database = MyDatabase.getInstance(application.applicationContext)!!
@@ -41,17 +42,21 @@ class Repository(application: Application) {
         job = Job()
         job.let {
             CoroutineScope(IO).launch {
-                try {
-                    val temp = MyRetrofitBuilder.ApiService.getAllResults().body()!!
-                    println("Debug Network request....")
-                    val data = async { Converter.getCountryList(temp) }
-                    cacheCountryData(data.await())
-                    job?.complete()
-                } catch (ex: Exception) {
-                    println(ex.message)
-                } finally {
-                    listCountries1.postValue(countryDao.getAllResults())
-                    println("Debug:getting data from database")
+                val job2 = withTimeoutOrNull(TIME_OUT) {
+                    try {
+                        val temp = MyRetrofitBuilder.ApiService.getAllResults().body()!!
+                        println("Debug Network request....")
+                        val data = async { Converter.getCountryList(temp) }
+                        cacheCountryData(data.await())
+                        job?.complete()
+                    } catch (ex: Exception) {
+                        println(ex.message)
+                    } finally {
+                        loadData()
+                    }
+                }
+                if (job2 == null) {
+                    loadData()
                 }
             }
         }
@@ -92,6 +97,44 @@ class Repository(application: Application) {
         }
     }
 
+    private suspend fun loadData() {
+        withContext(IO) {
+            listCountries1.postValue(countryDao.getAllResults())
+            println("Debug:getting data from database")
+        }
+    }
+
+    fun getTop10Countries(): LiveData<List<dbResponse>> {
+        job = Job()
+        val top10_list = MutableLiveData<List<dbResponse>>()
+        job.let {
+            CoroutineScope(IO).launch {
+                val temp = countryDao.getTop10Countries()
+                job!!.complete()
+                withContext(Main) {
+                    top10_list.postValue(temp)
+
+                }
+            }
+        }
+        return top10_list
+    }
+
+    fun getBottom10Countries(): LiveData<List<dbResponse>> {
+        job = Job()
+        val bottom10_list = MutableLiveData<List<dbResponse>>()
+        job.let {
+            CoroutineScope(IO).launch {
+                val temp = countryDao.getBottom10Countries()
+                job!!.complete()
+                withContext(Main) {
+                    bottom10_list.postValue(temp)
+
+                }
+            }
+        }
+        return bottom10_list
+    }
     fun cancelJobs() {
         job?.cancel()
     }
