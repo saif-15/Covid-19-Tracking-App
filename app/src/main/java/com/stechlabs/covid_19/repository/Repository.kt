@@ -135,6 +135,23 @@ class Repository(application: Application) {
         }
         return bottom10_list
     }
+
+    fun searchCountry(query: String): LiveData<List<dbResponse>> {
+
+        job = Job()
+        val query_list = MutableLiveData<List<dbResponse>>()
+        job.let {
+            CoroutineScope(IO).launch {
+                val temp = countryDao.searchQuery(query)
+                job!!.complete()
+                withContext(Main) {
+                    query_list.postValue(temp)
+
+                }
+            }
+        }
+        return query_list
+    }
     fun cancelJobs() {
         job?.cancel()
     }

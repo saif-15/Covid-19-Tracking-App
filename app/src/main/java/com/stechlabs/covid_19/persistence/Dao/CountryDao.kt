@@ -32,5 +32,8 @@ interface CountryDao {
     @Query("SELECT * FROM country ORDER BY cases ASC LIMIT 10")
     suspend fun getBottom10Countries(): List<Country>
 
+    @Query("SELECT * FROM country WHERE country.country LIKE '%' || :query || '%' ")
+    suspend fun searchQuery(query: String): List<Country>
+
 
 }
