@@ -1,127 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/cardBackground"
+                    app:closeIcon="@drawable/ic_prevention"
+                    app:queryBackground="@android:color/transparent"
+                    app:queryHint="Search"
+                    app:searchIcon="@drawable/ic_search" />
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:orientation="vertical" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cases_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:elevation="10dp"
-                app:cardCornerRadius="14dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/cases"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Total Cases"
-                        android:textColor="@android:color/holo_blue_light"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/total_cases"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/cases"
-                        android:text="12334"
-                        android:textColor="@android:color/holo_blue_light"
-                        android:textSize="50sp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/recovered_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cases_card"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:elevation="10dp"
-                app:cardCornerRadius="14dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/recovered"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Total Recovered"
-                        android:textColor="@android:color/holo_green_dark"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/total_recovered"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/recovered"
-                        android:text="12334"
-                        android:textColor="@android:color/holo_green_dark"
-                        android:textSize="50sp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/death_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recovered_card"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:elevation="10dp"
-                app:cardCornerRadius="14dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/death"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Total Deaths"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/total_deaths"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/death"
-                        android:text="12334"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="50sp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

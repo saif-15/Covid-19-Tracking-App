@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:cardCornerRadius="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/symptom_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="2dp"
+                android:lines="1"
+                android:text="Title"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/symptom_title"
+                android:background="@color/backgroundColor" />
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/symptom_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_below="@id/view"
+                android:layout_marginTop="2dp"
+                android:scaleType="fitCenter"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lungs" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

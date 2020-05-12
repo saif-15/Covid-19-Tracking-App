@@ -1,29 +1,67 @@
 package com.stechlabs.covid_19
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+
+    lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        button_dashboard.setOnClickListener(this)
+        button_preventions.setOnClickListener(this)
+        button_symptoms.setOnClickListener(this)
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.button_dashboard -> {
+                navigation(
+                    "DashboardFragment",
+                    "PreventionsFragment",
+                    "SymptonsFragment",
+                    R.id.action_preventionsFragment_to_dashboardFragment,
+                    R.id.action_symptonsFragment_to_dashboardFragment
+                )
+            }
+            R.id.button_preventions -> {
+                navigation(
+                    "PreventionsFragment",
+                    "DashboardFragment",
+                    "SymptonsFragment",
+                    R.id.action_dashboardFragment_to_preventionsFragment,
+                    R.id.action_symptonsFragment_to_preventionsFragment
+                )
+            }
+            R.id.button_symptoms -> {
+                navigation(
+                    "SymptonsFragment",
+                    "DashboardFragment",
+                    "PreventionsFragment",
+                    R.id.action_dashboardFragment_to_symptonsFragment,
+                    R.id.action_preventionsFragment_to_symptonsFragment
+                )
+            }
+        }
+    }
+
+    private fun navigation(from: String, to: String, and: String, id: Int, id2: Int) {
+
+        if (navController.currentDestination!!.label != from &&
+            navController.currentDestination!!.label == to
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+            navController.navigate(id)
+
+        if (navController.currentDestination!!.label != from &&
+            navController.currentDestination!!.label == and
+        )
+            navController.navigate(id2)
     }
 }

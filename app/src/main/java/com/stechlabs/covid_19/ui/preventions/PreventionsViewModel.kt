@@ -1,10 +1,10 @@
-package com.stechlabs.covid_19.ui.notifications
+package com.stechlabs.covid_19.ui.preventions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class PreventionsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"

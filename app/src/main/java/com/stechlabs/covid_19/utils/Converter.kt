@@ -5,24 +5,23 @@ import com.stechlabs.covid_19.models.persistence.Country as db_country
 
 object Converter {
 
-    suspend fun getCountryList(old_list: List<Country>): List<db_country> {
+    fun getCountryList(old_list: List<Country>): List<db_country> {
         val newList: ArrayList<db_country> = ArrayList()
-        for(i in 0 until old_list.size){
-            val old = old_list[i]
+        for (element in old_list) {
             newList.add(
                 db_country(
-                country=old.country,
-                cases=old.cases,
-                todayCases = old.todayCases,
-                deaths = old.deaths,
-                todayDeaths = old.todayDeaths,
-                recovered = old.recovered,
-                active = old.active,
-                critical = old.critical,
-                casesPerOneMillion = old.casesPerOneMillion,
-                deathsPerOneMillion = old.deathsPerOneMillion,
-                totalTests = old.totalTests,
-                testsPerOneMillion = old.testsPerOneMillion
+                    country = element.country,
+                    cases = element.cases,
+                    todayCases = element.todayCases,
+                    deaths = element.deaths,
+                    todayDeaths = element.todayDeaths,
+                    recovered = element.recovered,
+                    active = element.active,
+                    critical = element.critical,
+                    casesPerOneMillion = element.casesPerOneMillion,
+                    deathsPerOneMillion = element.deathsPerOneMillion,
+                    totalTests = element.totalTests,
+                    testsPerOneMillion = element.testsPerOneMillion
             ))
         }
         return newList

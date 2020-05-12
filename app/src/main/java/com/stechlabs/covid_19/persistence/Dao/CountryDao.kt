@@ -9,6 +9,7 @@ import com.stechlabs.covid_19.models.persistence.Country
 @Dao
 interface CountryDao {
 
+
     @Insert(onConflict = REPLACE)
     suspend fun cacheCountryData(list:List<Country>)
 
@@ -18,7 +19,7 @@ interface CountryDao {
                 "AND c.country !='Asia'  AND c.country !='South America' " +
                 "ORDER BY cases DESC"
     )
-    suspend fun getAllResults():List<Country>
+    suspend fun getAllResults(): List<Country>
 
     @Query("SELECT * FROM country as c WHERE c.country = :countryName")
     suspend fun getCountryResult(countryName:String):Country
@@ -32,7 +33,12 @@ interface CountryDao {
     @Query("SELECT * FROM country ORDER BY cases ASC LIMIT 10")
     suspend fun getBottom10Countries(): List<Country>
 
-    @Query("SELECT * FROM country WHERE country.country LIKE '%' || :query || '%' ")
+    @Query(
+        "SELECT * FROM country as c WHERE c.country !='World' AND " +
+                "c.country !='Europe' AND c.country !='North America'  " +
+                "AND c.country !='Asia'  AND c.country !='South America' " +
+                "AND c.country LIKE '%' || :query || '%' "
+    )
     suspend fun searchQuery(query: String): List<Country>
 
 

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <!--<color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+-->
+
+    <color name="colorPrimary">@color/cardBackground</color>
+    <color name="colorPrimaryDark">@color/mustard</color>
+    <color name="colorAccent">@color/whitish</color>
+
+    <color name="gray">#DFDFDF</color>
+    <color name="whitish">#EAEBF1</color>
+    <color name="blue">#0E1F9A</color>
+    <color name="darkGray">#5A5B5D</color>
+    <color name="mustard">#FDA03F</color>
+    <color name="brownish">#E0702C</color>
+    <color name="purpleBlue">#4B5EB3</color>
+    <color name="backgroundColor">@color/gray</color>
+    <color name="cardBackground">#FFC377</color>
+    <color name="rippleColor">#FFCD9D</color>
+
 </resources>

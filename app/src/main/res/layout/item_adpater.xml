@@ -2,33 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="14dp"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/card_background"
             android:padding="16dp">
 
             <TextView
                 android:id="@+id/country_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Country name"
                 android:textSize="20sp"/>
 
-            <TextView
+            <com.daasuu.cat.CountAnimationTextView
                 android:id="@+id/cases"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="123456"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/gray"
                 android:layout_below="@id/country_name"
                 android:textSize="36sp"/>
+
+            <com.daasuu.cat.CountAnimationTextView
+                android:id="@+id/today_cases"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cases"
+                android:text="0"
+                android:textColor="@color/gray"
+                android:textSize="36sp" />
 
         </RelativeLayout>
 

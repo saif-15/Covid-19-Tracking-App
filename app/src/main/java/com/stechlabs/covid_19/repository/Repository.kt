@@ -16,6 +16,8 @@ class Repository(application: Application) {
 
     private var countryDao: CountryDao
     private var listCountries1: MutableLiveData<List<dbResponse>> = MutableLiveData()
+
+    // private var searchCountries: MutableLiveData<List<dbResponse>> = MutableLiveData()
     private var country: MutableLiveData<dbResponse> = MutableLiveData()
     private var job: CompletableJob? = null
     private val TIME_OUT = 4000L
@@ -74,7 +76,7 @@ class Repository(application: Application) {
         }
     }
 
-    fun observeCountriesFromDB(): LiveData<List<dbResponse>> {
+    fun observeCountriesFromDB(): MutableLiveData<List<dbResponse>> {
         getCountriesResults()
         return listCountries1
     }
@@ -136,21 +138,19 @@ class Repository(application: Application) {
         return bottom10_list
     }
 
-    fun searchCountry(query: String): LiveData<List<dbResponse>> {
-
+    fun searchCountry(query: String): MutableLiveData<List<dbResponse>> {
         job = Job()
-        val query_list = MutableLiveData<List<dbResponse>>()
+        val list = MutableLiveData<List<dbResponse>>()
         job.let {
             CoroutineScope(IO).launch {
                 val temp = countryDao.searchQuery(query)
                 job!!.complete()
                 withContext(Main) {
-                    query_list.postValue(temp)
-
+                    list.value = temp
                 }
             }
         }
-        return query_list
+        return list
     }
     fun cancelJobs() {
         job?.cancel()

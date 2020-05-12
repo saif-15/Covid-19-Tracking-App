@@ -1,4 +1,4 @@
-package com.stechlabs.covid_19.ui.notifications
+package com.stechlabs.covid_19.ui.preventions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.stechlabs.covid_19.R
 
-class NotificationsFragment : Fragment() {
+class PreventionsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var preventionsViewModel: PreventionsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
+        preventionsViewModel =
+            ViewModelProviders.of(this).get(PreventionsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_preventions, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(this, Observer {
+        preventionsViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root
