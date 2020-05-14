@@ -10,9 +10,5 @@
         <item name="android:fontFamily">@font/comforta_font</item>
     </style>
 
-    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="android:textColor">@color/whitish</item>
-        <item name="android:editTextColor">@color/whitish</item>
-    </style>
 
 </resources>

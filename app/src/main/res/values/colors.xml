@@ -5,7 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 -->
 
-    <color name="colorPrimary">@color/cardBackground</color>
+    <color name="colorPrimary">@color/mustard</color>
     <color name="colorPrimaryDark">@color/mustard</color>
     <color name="colorAccent">@color/whitish</color>
 

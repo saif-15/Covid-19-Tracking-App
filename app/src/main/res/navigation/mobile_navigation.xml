@@ -11,8 +11,8 @@
 
         <!--forward navigation animation-->
         <action
-            android:id="@+id/action_dashboardFragment_to_preventionsFragment"
-            app:destination="@id/preventionsFragment"
+            android:id="@+id/action_dashboardFragment_to_listFragment"
+            app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -21,18 +21,18 @@
         <!--back navigation animation-->
         <action
             android:id="@+id/action_dashboardFragment_to_symptonsFragment"
-            app:destination="@id/symptonsFragment"
+            app:destination="@id/symptomsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
-        android:id="@+id/preventionsFragment"
-        android:name="com.stechlabs.covid_19.ui.preventions.PreventionsFragment"
-        android:label="PreventionsFragment">
+        android:id="@+id/listFragment"
+        android:name="com.stechlabs.covid_19.ui.listing.ListFragment"
+        android:label="ListFragment">
         <action
-            android:id="@+id/action_preventionsFragment_to_dashboardFragment"
+            android:id="@+id/action_listFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
@@ -41,8 +41,8 @@
             app:popUpTo="@+id/mobile_navigation"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_preventionsFragment_to_symptonsFragment"
-            app:destination="@id/symptonsFragment"
+            android:id="@+id/action_listFragment_to_symptomsFragment"
+            app:destination="@id/symptomsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -51,12 +51,12 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/symptonsFragment"
-        android:name="com.stechlabs.covid_19.ui.symptoms.SymptonsFragment"
-        android:label="SymptonsFragment">
+        android:id="@+id/symptomsFragment"
+        android:name="com.stechlabs.covid_19.ui.symptoms.SymptomsFragment"
+        android:label="SymptomsFragment">
         <action
-            android:id="@+id/action_symptonsFragment_to_preventionsFragment"
-            app:destination="@id/preventionsFragment"
+            android:id="@+id/action_symptomsFragment_to_listFragment"
+            app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -64,7 +64,7 @@
             app:popUpTo="@+id/mobile_navigation"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_symptonsFragment_to_dashboardFragment"
+            android:id="@+id/action_symptomsFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

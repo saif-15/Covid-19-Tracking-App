@@ -25,28 +25,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button_dashboard -> {
                 navigation(
                     "DashboardFragment",
-                    "PreventionsFragment",
-                    "SymptonsFragment",
-                    R.id.action_preventionsFragment_to_dashboardFragment,
-                    R.id.action_symptonsFragment_to_dashboardFragment
+                    "ListFragment",
+                    "SymptomsFragment",
+                    R.id.action_listFragment_to_dashboardFragment,
+                    R.id.action_symptomsFragment_to_dashboardFragment
                 )
             }
             R.id.button_preventions -> {
                 navigation(
-                    "PreventionsFragment",
+                    "ListFragment",
                     "DashboardFragment",
-                    "SymptonsFragment",
-                    R.id.action_dashboardFragment_to_preventionsFragment,
-                    R.id.action_symptonsFragment_to_preventionsFragment
+                    "SymptomsFragment",
+                    R.id.action_dashboardFragment_to_listFragment,
+                    R.id.action_symptomsFragment_to_listFragment
                 )
             }
             R.id.button_symptoms -> {
                 navigation(
-                    "SymptonsFragment",
+                    "SymptomsFragment",
                     "DashboardFragment",
-                    "PreventionsFragment",
+                    "ListFragment",
                     R.id.action_dashboardFragment_to_symptonsFragment,
-                    R.id.action_preventionsFragment_to_symptonsFragment
+                    R.id.action_listFragment_to_symptomsFragment
                 )
             }
         }

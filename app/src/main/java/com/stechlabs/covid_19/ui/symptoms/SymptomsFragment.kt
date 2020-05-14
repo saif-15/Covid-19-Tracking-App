@@ -17,7 +17,7 @@ import com.stechlabs.covid_19.ui.adapters.SymptomsAdapter
 import kotlinx.android.synthetic.main.fragment_symptoms.view.*
 
 
-class SymptonsFragment : Fragment() {
+class SymptomsFragment : Fragment() {
 
     private lateinit var symptomsViewModel: SymptomsViewModel
 
@@ -40,10 +40,7 @@ class SymptonsFragment : Fragment() {
         recyclerView.adapter = adapter
 
         //Symptoms RecyclerView click listener
-        adapter.setOnItemClickListener {
-            view?.symptom_animation?.setAnimation(it.animationDrawable)
-            view!!.symptom_animation.playAnimation()
-        }
+        adapter.setOnItemClickListener { }
 
 
         // Prevention RecyclerView
@@ -58,8 +55,7 @@ class SymptonsFragment : Fragment() {
 
         // Prevention recyclerview listener
         adapterPrevention.setOnItemClickListener {
-            view!!.prevention_animation.setAnimation(it.animationDrawable)
-            view!!.prevention_animation.playAnimation()
+
         }
         return root
     }

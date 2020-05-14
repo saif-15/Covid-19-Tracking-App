@@ -30,6 +30,7 @@ dependencies {
     def version="1.3.5"
     def room_version = "2.2.5"
     def lottieVersion ="3.4.0"
+    def chartVersion="3.3.0"
 
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -71,4 +72,7 @@ dependencies {
 
     //Counter TextView
     implementation 'com.daasuu:CountAnimationTextView:0.1.2'
+
+    // Chart Library
+    implementation "com.diogobernardino:williamchart:$chartVersion"
 }
