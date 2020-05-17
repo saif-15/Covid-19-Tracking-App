@@ -20,8 +20,6 @@ interface CountryDao {
     )
     suspend fun getAllResults(): List<Country>
 
-    @Query("SELECT * FROM country as c WHERE c.country = :countryName")
-    suspend fun getCountryResult(countryName: String): Country
 
     @Query("SELECT * FROM country as c WHERE c.country = 'World'")
     suspend fun getGlobalResult(): Country
@@ -85,7 +83,4 @@ interface CountryDao {
                 "AND c.country ORDER BY totalTests DESC LIMIT 10"
     )
     suspend fun getCountriesByTests(): List<Country>
-
-
-
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_parent"
+    android:layout_width="170dp"
+    android:layout_height="210dp"
+    android:layout_margin="4dp"
+    android:elevation="4dp"
+    app:cardCornerRadius="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dashboard_card_background">
+
+
+        <TextView
+            android:id="@+id/title_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="title"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/cases_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_recyclerview"
+            android:layout_marginBottom="6dp"
+            android:text="1234"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+
+        <com.db.williamchart.view.LineChartView
+            android:id="@+id/linechart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/cases_recyclerview"
+            app:chart_axis="none"
+            app:chart_lineColor="@android:color/white"
+            app:chart_lineThickness="3dp"
+            app:chart_smoothLine="true" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

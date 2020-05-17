@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.stechlabs.covid_19.R
-import com.stechlabs.covid_19.models.ui.Preventions
+import com.stechlabs.covid_19.models.ui.Items
 import kotlinx.android.synthetic.main.item_symptom.view.*
 
-class PreventionAdpater : RecyclerView.Adapter<PreventionAdpater.MyViewHolder>() {
+class ItemAdpater : RecyclerView.Adapter<ItemAdpater.MyViewHolder>() {
 
-    private var list = listOf<Preventions>()
-    private lateinit var listener: (Preventions) -> Unit
+    private var list = listOf<Items>()
+    private lateinit var listener: (Items) -> Unit
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_symptom, parent, false)
@@ -23,7 +24,7 @@ class PreventionAdpater : RecyclerView.Adapter<PreventionAdpater.MyViewHolder>()
         return list.size
     }
 
-    fun setList(list: List<Preventions>) {
+    fun setList(list: List<Items>) {
         this.list = list
     }
 
@@ -31,7 +32,7 @@ class PreventionAdpater : RecyclerView.Adapter<PreventionAdpater.MyViewHolder>()
         holder.bind(list[position])
     }
 
-    fun setOnItemClickListener(listener: (Preventions) -> Unit) {
+    fun setOnItemClickListener(listener: (Items) -> Unit) {
         this.listener = listener
     }
 
@@ -39,7 +40,7 @@ class PreventionAdpater : RecyclerView.Adapter<PreventionAdpater.MyViewHolder>()
 
         val title = itemView.symptom_title
         val animation: LottieAnimationView = itemView.symptom_animation
-        fun bind(item: Preventions) {
+        fun bind(item: Items) {
             title.text = item.title
             animation.setAnimation(item.animationDrawable)
             itemView.setOnClickListener {

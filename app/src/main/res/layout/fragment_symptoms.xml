@@ -41,7 +41,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/rippleColor"
+                        android:background="@drawable/dashboard_card_background"
                         android:padding="25dp">
 
                         <TextView
@@ -84,7 +84,6 @@
                 android:layout_margin="4dp"
                 android:orientation="horizontal" />
 
-
             <RelativeLayout
                 android:id="@+id/layout_2"
                 android:layout_width="match_parent"
@@ -102,7 +101,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/rippleColor"
+                        android:background="@drawable/dashboard_card_background"
                         android:padding="25dp">
 
 

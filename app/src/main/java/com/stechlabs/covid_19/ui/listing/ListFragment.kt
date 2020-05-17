@@ -45,7 +45,7 @@ class ListFragment : Fragment() {
         //Observing data from db
         listViewModel.getCountries().observe(this, Observer {
             if (it.isNotEmpty()) {
-                adapter.setList(it)
+                adapter.submitList(it)
                 adapter.notifyDataSetChanged()
                 root.refresh_layout.isRefreshing = false
             }
@@ -57,7 +57,7 @@ class ListFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 listViewModel.getCountriesByQuery(query!!).observe(this@ListFragment,
                     Observer {
-                        adapter.setList(it)
+                        adapter.submitList(it)
                         adapter.notifyDataSetChanged()
 
                     })
@@ -67,7 +67,7 @@ class ListFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 listViewModel.getCountriesByQuery(newText!!).observe(this@ListFragment,
                     Observer {
-                        adapter.setList(it)
+                        adapter.submitList(it)
                         adapter.notifyDataSetChanged()
 
                     })
@@ -83,7 +83,7 @@ class ListFragment : Fragment() {
         //Refresh Layout
         root.refresh_layout.setOnRefreshListener {
             listViewModel.getCountries().observe(this, Observer {
-                adapter.setList(it)
+                adapter.submitList(it)
                 adapter.notifyDataSetChanged()
                 root.refresh_layout.isRefreshing = false
             })

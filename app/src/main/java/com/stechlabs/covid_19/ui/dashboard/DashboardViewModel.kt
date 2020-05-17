@@ -38,6 +38,12 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         return repository.getCountriesByTests()
     }
 
+
+    fun getCountries(): LiveData<List<Country>> {
+        return repository.getCountries()
+    }
+
+
     fun cancelJobs() {
         repository.cancelJobs()
     }
