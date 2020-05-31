@@ -1,6 +1,5 @@
 package com.stechlabs.covid_19.ui.dashboard
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -17,7 +16,6 @@ import java.text.DecimalFormat
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private lateinit var dashboardViewModel: DashboardViewModel
-    private lateinit var prefs: SharedPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
