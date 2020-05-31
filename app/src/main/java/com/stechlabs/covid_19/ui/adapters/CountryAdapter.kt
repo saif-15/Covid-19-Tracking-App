@@ -46,17 +46,28 @@ class CountryAdapter :
 
         val country_name = itemView.country_name
         val cases = itemView.cases
-        val today_cases = itemView.today_cases
+        val recovered = itemView.recovered
+        val deaths = itemView.deaths
         fun bind(item: Country) {
             country_name.text = item.country
-            cases.setAnimationDuration(2000)
-            cases.setDecimalFormat(DecimalFormat("###,###,###"))
-            cases.countAnimation(0, item.cases)
-            cases.setInterpolator(AccelerateInterpolator())
-            today_cases.setAnimationDuration(2000)
-            today_cases.setDecimalFormat(DecimalFormat("###,###,###"))
-            today_cases.countAnimation(0, item.todayCases)
-            today_cases.setInterpolator(AccelerateInterpolator())
+            cases.apply {
+                setAnimationDuration(500)
+                setDecimalFormat(DecimalFormat("###,###,###"))
+                countAnimation(0, item.cases)
+                setInterpolator(AccelerateInterpolator())
+            }
+            recovered.apply {
+                setAnimationDuration(500)
+                setDecimalFormat(DecimalFormat("###,###,###"))
+                countAnimation(0, item.recovered)
+                setInterpolator(AccelerateInterpolator())
+            }
+            deaths.apply {
+                setAnimationDuration(500)
+                setDecimalFormat(DecimalFormat("###,###,###"))
+                countAnimation(0, item.deaths)
+                setInterpolator(AccelerateInterpolator())
+            }
 
         }
     }

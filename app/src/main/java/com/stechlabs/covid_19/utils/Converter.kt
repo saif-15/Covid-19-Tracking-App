@@ -1,12 +1,15 @@
 package com.stechlabs.covid_19.utils
 
 import com.stechlabs.covid_19.models.apiResponse.Country
+import java.util.*
+import kotlin.collections.ArrayList
 import com.stechlabs.covid_19.models.persistence.Country as db_country
 
 object Converter {
 
     fun getCountryList(old_list: List<Country>): List<db_country> {
         val newList: ArrayList<db_country> = ArrayList()
+        val calendar = Calendar.getInstance()
         for (element in old_list) {
             newList.add(
                 db_country(
@@ -21,8 +24,10 @@ object Converter {
                     casesPerOneMillion = element.casesPerOneMillion,
                     deathsPerOneMillion = element.deathsPerOneMillion,
                     totalTests = element.totalTests,
-                    testsPerOneMillion = element.testsPerOneMillion
-            ))
+                    testsPerOneMillion = element.testsPerOneMillion,
+                    date = Date(calendar.timeInMillis)
+                )
+            )
         }
         return newList
     }

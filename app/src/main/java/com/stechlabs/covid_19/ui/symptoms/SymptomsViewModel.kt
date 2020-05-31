@@ -18,7 +18,7 @@ class SymptomsViewModel : ViewModel() {
 
     private fun populateSymptomsList(): List<Items> {
         return listOf(
-            Items("Sneeze", "", R.raw.sneezing),
+            Items("Cough", "", R.raw.sneezing),
             Items("Temperature", "", R.raw.temperature),
             Items("Breathe", "", R.raw.lungs),
             Items("Fever", "", R.raw.fever)
@@ -28,7 +28,7 @@ class SymptomsViewModel : ViewModel() {
     private fun populatePreventionsList(): List<Items> {
         return listOf(
             Items("Wear Mask", "", R.raw.mask),
-            Items("Wash Hand", "", R.raw.handwashing),
+            Items("Wash Hands", "", R.raw.handwashing),
             Items("Distancing", "", R.raw.distancing),
             Items("Stay Home", "", R.raw.stayhome)
         )

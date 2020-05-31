@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="14dp"
-        >
+        app:cardCornerRadius="14dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,26 +22,75 @@
                 android:id="@+id/country_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/secular_heading"
                 android:text="Country name"
-                android:textSize="20sp"/>
+                android:textSize="26sp" />
+
+
+            <TextView
+                android:id="@+id/cases_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/country_name"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/recovered_title"
+                android:text="Cases"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/recovered_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/country_name"
+                android:layout_centerHorizontal="true"
+                android:text="Recovered"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/deaths_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/country_name"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:text="Deaths"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="18sp" />
 
             <com.daasuu.cat.CountAnimationTextView
                 android:id="@+id/cases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/cases_title"
                 android:text="0"
-                android:textColor="@color/gray"
-                android:layout_below="@id/country_name"
-                android:textSize="36sp"/>
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="24sp" />
 
             <com.daasuu.cat.CountAnimationTextView
-                android:id="@+id/today_cases"
+                android:id="@+id/recovered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cases"
+                android:layout_below="@id/recovered_title"
+                android:layout_centerHorizontal="true"
                 android:text="0"
-                android:textColor="@color/gray"
-                android:textSize="36sp" />
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="24sp" />
+
+            <com.daasuu.cat.CountAnimationTextView
+                android:id="@+id/deaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recovered_title"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:text="0"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="24sp" />
 
         </RelativeLayout>
 

@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.stechlabs.covid_19.models.persistence.Country
 import com.stechlabs.covid_19.persistence.Dao.CountryDao
+import com.stechlabs.covid_19.utils.DateTimeConverter
 
 @Database(entities = [Country::class], version = 1)
-abstract class MyDatabase :RoomDatabase() {
+@TypeConverters(DateTimeConverter::class)
+abstract class MyDatabase : RoomDatabase() {
 
 
     abstract fun countryDao(): CountryDao

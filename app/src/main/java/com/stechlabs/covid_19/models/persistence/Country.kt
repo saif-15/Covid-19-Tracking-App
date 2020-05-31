@@ -1,12 +1,11 @@
 package com.stechlabs.covid_19.models.persistence
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
+import java.util.*
 
-@Entity(tableName = "country")
+@Entity(tableName = "country", primaryKeys = ["country"])
 data class Country(
 
-    @PrimaryKey
     val country: String,
     val cases: Int,
     val recovered: Int,
@@ -22,5 +21,7 @@ data class Country(
     val todayDeaths: Int,
 
     val totalTests: Int,
-    val testsPerOneMillion: Int
+    val testsPerOneMillion: Int,
+
+    val date: Date?
 )

@@ -3,13 +3,13 @@ package com.stechlabs.covid_19.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.stechlabs.covid_19.ApiService.MyRetrofitBuilder
+import com.stechlabs.covid_19.models.persistence.Country
 import com.stechlabs.covid_19.persistence.Dao.CountryDao
 import com.stechlabs.covid_19.persistence.database.MyDatabase
 import com.stechlabs.covid_19.utils.Converter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import com.stechlabs.covid_19.models.persistence.Country as dbResponse
 
 class Repository(application: Application) {
 
@@ -19,7 +19,7 @@ class Repository(application: Application) {
     private val TIME_OUT = 4000L
 
 
-    //  Intializing database nand getting Dao
+    //  Intializing database and getting Dao
     init {
         val database = MyDatabase.getInstance(application.applicationContext)!!
         countryDao = database.countryDao()
@@ -40,9 +40,9 @@ class Repository(application: Application) {
 
     // Getting All countries results
 
-    fun getCountries(): LiveData<List<dbResponse>> {
+    fun getCountries(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
@@ -59,7 +59,7 @@ class Repository(application: Application) {
 
 
     // caching Data to the database
-    private suspend fun cacheCountryData(list: List<dbResponse>) {
+    private suspend fun cacheCountryData(list: List<Country>) {
         job = Job()
         job.let {
             countryDao.cacheCountryData(list = list)
@@ -70,32 +70,14 @@ class Repository(application: Application) {
 
     // getting global Result
 
-    fun getGlobalResult(): LiveData<dbResponse> {
+    fun getGlobalResult(): LiveData<Country> {
         job = Job()
-        return object : LiveData<dbResponse>() {
+        return object : LiveData<Country>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
                     CoroutineScope(IO).launch {
-                        val temp = countryDao.getGlobalResult()
-                        job.complete()
-                        withContext(Main) {
-                            value = temp
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-
-    fun getTop10Countries(): LiveData<List<dbResponse>> {
-        job = Job()
-        return object : LiveData<List<dbResponse>>() {
-            override fun onActive() {
-                super.onActive()
-                job.let {
-                    CoroutineScope(IO).launch {
                         /* Requesting internet for 4 seconds for data
                          if timeout occurs data is loaded from the
                          database
@@ -106,29 +88,47 @@ class Repository(application: Application) {
                                 println("Debug Network request....")
                                 val data = async { Converter.getCountryList(temp) }
                                 cacheCountryData(data.await())
-                                job.complete()
                             } catch (ex: Exception) {
                                 println("debug  ${ex.message}")
                             } finally {
                                 // if Exceptions occurs
-                                postValue(countryDao.getTop10Countries())
+                                postValue(countryDao.getGlobalResult())
                                 println("Debug Getting data from Database.... in finally")
+                                job.complete()
                             }
                         }
                         if (job2 == null) {
                             // if timeout occurs
-                            postValue(countryDao.getTop10Countries())
+                            postValue(countryDao.getGlobalResult())
                             println("Debug Getting data from Database....job2 is null")
                         }
+
                     }
                 }
             }
         }
     }
 
-    fun getBottom10Countries(): LiveData<List<dbResponse>> {
+
+    fun getTop10Countries(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
+            override fun onActive() {
+                super.onActive()
+                job.let {
+                    CoroutineScope(IO).launch {
+                        val list = countryDao.getTop10Countries()
+                        postValue(list)
+                        job.complete()
+                    }
+                }
+            }
+        }
+    }
+
+    fun getBottom10Countries(): LiveData<List<Country>> {
+        job = Job()
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
@@ -143,13 +143,14 @@ class Repository(application: Application) {
 
     }
 
-    fun searchCountry(query: String): LiveData<List<dbResponse>> {
+
+    fun searchCountry(query: String): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
-                    CoroutineScope(IO + it).launch {
+                    CoroutineScope(IO).launch {
                         val temp = countryDao.searchQuery(query)
                         job.complete()
                         withContext(Main) {
@@ -162,13 +163,13 @@ class Repository(application: Application) {
     }
 
 
-    fun getCountriesByDeathsToday(): LiveData<List<dbResponse>> {
+    fun getCountriesByDeathsToday(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
-                    CoroutineScope(IO + it).launch {
+                    CoroutineScope(IO).launch {
                         val temp = countryDao.getCountriesByDeathsToday()
                         job.complete()
                         withContext(Main) {
@@ -182,18 +183,17 @@ class Repository(application: Application) {
 
     }
 
-    fun getCountriesByDeaths(): LiveData<List<dbResponse>> {
+    fun getCountriesByDeaths(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
-                    CoroutineScope(IO + it).launch {
+                    CoroutineScope(IO).launch {
                         val temp = countryDao.getCountriesByDeaths()
+                        println("$temp  in repo")
+                        postValue(temp)
                         job.complete()
-                        withContext(Main) {
-                            value = temp
-                        }
                     }
                 }
 
@@ -202,13 +202,13 @@ class Repository(application: Application) {
 
     }
 
-    fun getCountriesByTodayCases(): LiveData<List<dbResponse>> {
+    fun getCountriesByTodayCases(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
-                    CoroutineScope(IO + it).launch {
+                    CoroutineScope(IO).launch {
                         val temp = countryDao.getCountriesByTodayCases()
                         job.complete()
                         withContext(Main) {
@@ -220,13 +220,13 @@ class Repository(application: Application) {
         }
     }
 
-    fun getCountriesByTests(): LiveData<List<dbResponse>> {
+    fun getCountriesByTests(): LiveData<List<Country>> {
         job = Job()
-        return object : LiveData<List<dbResponse>>() {
+        return object : LiveData<List<Country>>() {
             override fun onActive() {
                 super.onActive()
                 job.let {
-                    CoroutineScope(IO + it).launch {
+                    CoroutineScope(IO).launch {
                         val temp = countryDao.getCountriesByTests()
                         job.complete()
                         withContext(Main) {
@@ -238,6 +238,23 @@ class Repository(application: Application) {
             }
         }
     }
+
+    fun getCountriesByRecovered(): LiveData<List<Country>> {
+        job = Job()
+        return object : LiveData<List<Country>>() {
+            override fun onActive() {
+                super.onActive()
+                job.let {
+                    CoroutineScope(IO).launch {
+                        val list = countryDao.getCountriesByRecovered()
+                        postValue(list)
+                        job.complete()
+                    }
+                }
+            }
+        }
+    }
+
     fun cancelJobs() {
         job.cancel()
     }

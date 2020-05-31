@@ -9,7 +9,7 @@ import com.stechlabs.covid_19.R
 import com.stechlabs.covid_19.models.ui.Items
 import kotlinx.android.synthetic.main.item_symptom.view.*
 
-class ItemAdpater : RecyclerView.Adapter<ItemAdpater.MyViewHolder>() {
+class ItemAdapter : RecyclerView.Adapter<ItemAdapter.MyViewHolder>() {
 
     private var list = listOf<Items>()
     private lateinit var listener: (Items) -> Unit
