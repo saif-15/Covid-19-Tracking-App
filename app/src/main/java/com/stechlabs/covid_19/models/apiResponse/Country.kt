@@ -23,9 +23,9 @@ data class Country(
     val critical:Int,
     @SerializedName("casesPerOneMillion") @Expose
     val casesPerOneMillion:Int,
-    @SerializedName("totalTests") @Expose
-    val deathsPerOneMillion: Int,
     @SerializedName("deathsPerOneMillion") @Expose
+    val deathsPerOneMillion: Int,
+    @SerializedName("totalTests") @Expose
     val totalTests:Int,
     @SerializedName("testsPerOneMillion") @Expose
     val testsPerOneMillion:Int
